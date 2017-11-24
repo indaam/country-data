@@ -64,6 +64,7 @@ $(document).ready(function() {
 ## Usage with React Web
 Basically this plugin run in React, but not standard & not recommend
 #### JS
+```js
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import countries from './countries.js';
