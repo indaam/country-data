@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <!-- Get jQuaery -->
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+    <!-- Get css -->
+	<link rel="stylesheet" href="dist/css/country-data.css">
+</head>
+<body>
+	<div>
+		<input name="country" type="text" class="js_country">
+	</div>
+    <!-- Get JS -->
+	<script src="dist/js/countries.js"></script>
+	<script src="dist/js/country-data.js"></script>
+
+<script>
+	var el = document.getElementsByClassName("js_country")[0];
+    var options = {
+        dataCountries: countries,
+        keyup : function(t, v){
+        	console.log(v);
+        }
+    }
+
+	// $(document).ready(function() {
+	// 	$('.js_country').COUNTRY_Data(options);
+	// });
+	var INIT_Country = new __COUNTRY_Data(el, options);
+</script>
+
+</body>
+</html>

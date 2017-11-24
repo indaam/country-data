@@ -1,0 +1,141 @@
+@charset "UTF-8";
+@import "compass";
+@import "compass/reset";
+/*
+|--------------------------------------------------------------------------
+| Include Sprite
+|--------------------------------------------------------------------------
+*/
+
+$flag-sprite-dimensions: true;
+$flag-spacing: 2px;
+@import "flag/*.png";
+
+/*
+|--------------------------------------------------------------------------
+| SETTUP
+| @NAMESPACE __COUNTRY
+| Variable
+|--------------------------------------------------------------------------
+*/
+
+$NAMESPACE : '__COUNTRY';
+$__COUNTRY_COLOR : #202423;
+$__COUNTRY_BG_COLOR : #ffffff;
+$__COUNTRY_BORDER_COLOR : #ccd2d2;
+$__COUNTRY_FONT_FAMILY : Helvetica, Arial, sans-serif;
+$__COUNTRY_FONT_SIZE : 14px;
+$__COUNTRY_GUTTER : 12px;
+$__COUNTRY_WIDTH : 360px;
+
+.#{$NAMESPACE}{
+	color: $__COUNTRY_COLOR;
+	background-color: $__COUNTRY_BG_COLOR;
+	font-family: $__COUNTRY_FONT_FAMILY;
+	font-size: $__COUNTRY_FONT_SIZE;
+
+	@include all-flag-sprites;
+
+	// Class
+	&-transition{
+		@include transition(all ease .4s);
+	}
+
+	&-container{
+		width: $__COUNTRY_WIDTH;
+		margin: 40px auto;
+	}
+
+	&-input{
+		padding: $__COUNTRY_GUTTER;
+		width: 100%;
+		// @include box-sizing(border-box);
+		box-sizing: border-box;
+		border: 1px solid $__COUNTRY_BORDER_COLOR;
+		font-size: $__COUNTRY_FONT_SIZE;
+		position: relative;
+		z-index: 1;
+		&:focus + {
+			.#{$NAMESPACE}-label{
+				opacity: 1;
+				top: $__COUNTRY_GUTTER*(-1.4);
+				font-size: $__COUNTRY_FONT_SIZE*.8;
+			}
+
+		}
+		.#{$NAMESPACE}-have-value &{
+			padding-left: $__COUNTRY_GUTTER*5.5;
+		}
+	}
+	&-input-wrap{
+		margin-bottom: $__COUNTRY_GUTTER * 1.5;
+		position: relative;
+		margin-bottom: $__COUNTRY_GUTTER*2;
+	}
+
+	&-label{
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		padding-left: $__COUNTRY_GUTTER;
+		color: lighten($__COUNTRY_COLOR, 20%);
+		opacity: 0;
+		font-size: $__COUNTRY_FONT_SIZE/3;
+		@extend .#{$NAMESPACE}-transition;
+	}
+	&-label-value{
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		padding-left: $__COUNTRY_GUTTER;
+		width: $__COUNTRY_GUTTER*2.5;
+		padding: $__COUNTRY_GUTTER;
+		z-index: 1;
+		border-right: 1px solid $__COUNTRY_BORDER_COLOR;
+		line-height: $__COUNTRY_GUTTER*1.5;
+		z-index: 0;
+		@include ellipsis;
+		.#{$NAMESPACE}-have-value &{
+			z-index: 1;
+		}
+	}
+
+	&-flag-wrap{
+		float: left;
+		width: 50px;
+		span{
+			display: inline-block;
+		}
+	}
+
+	&-country-list-wrap{
+		display: block;
+		position: absolute;
+		width: 100%;
+		z-index: 999;
+		background: #fff;
+		max-height: 180px;
+		max-height: 196px;
+		overflow: auto;
+		border: 1px solid $__COUNTRY_BORDER_COLOR;
+		box-sizing: border-box;
+	}
+
+	&-country-list{
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		li{
+			border-bottom: 1px solid $__COUNTRY_BORDER_COLOR;
+			padding: $__COUNTRY_GUTTER;
+			background-color: darken($__COUNTRY_BG_COLOR, 2%);
+			cursor: pointer;
+			&.#{$NAMESPACE}-selected,
+			&:hover{
+				background-color: darken($__COUNTRY_BG_COLOR, 5%);
+			}
+		}
+	}
+}
