@@ -209,11 +209,9 @@
             this.addEventListener("focusin", function(){
                 _this.countryListWrap.style.display = 'block';
 
-                console.log("focusin");
 
             });
             document.getElementsByTagName('body')[0].addEventListener("click", function(e){
-                console.log(e.target.parentNode.className);
                 var re = vars.namespace+'(-input-wrap|-country-list)';
                 var pattern = new RegExp(re);
                 if ( !(pattern).test(e.target.parentNode.className)){
@@ -227,12 +225,21 @@
             var _this = this;
 
             this.addEventListener('keyup', function(e){
+                var _input = this;
+
+                if ( _input.value.length > 0) {
+                    _this.countryListWrap.style.display = 'block';
+                }else{
+                    _this.countryListWrap.style.display = 'none';
+                }
 
                 if ( e.keyCode != 40 && e.keyCode != 38) {
 
                     var _val = this.value;
                     var _countryData = "";
                     var _result = TOOLS.filterData(_this.vars.dataCountries, _val);
+
+                    _this.TotalData = _result.length;
 
                     if ( _result ) {
 
@@ -261,7 +268,6 @@
             if ( this.vars.print) {
 
                 for( var i in _this.vars.printInput ){
-                    console.log(_this.vars.printInput[i]);
                     if ( _this.vars.printInput[i].type == "phone" || _this.vars.printInput[i].type == "currency") {
                         _this.list_input_wrap[_this.vars.printInput[i].type].classList.add(_this.vars.namespace+'-have-value');
                         _this.list_label_value[_this.vars.printInput[i].type].innerHTML = value[_this.vars.printInput[i].type];
@@ -281,7 +287,6 @@
             var vars = this.vars;
 
             this.countryList.addEventListener('click', function(e){
-                console.log(e);
                 var target = e.target;
                 if ( e.target.nodeName == "LI") {
                     target = e.target
@@ -290,7 +295,6 @@
                 }else{
                     target = e.target.parentElement.parentElement
                 }
-                console.log(target);
                 _this.SetVal(target);
 
                 if ( typeof _this.vars.selected == "function") {
@@ -300,7 +304,6 @@
                 _this.countryListWrap.style.display = 'none';
 
             })
-
         }
 
         COUNTRY_CORE.UseKey = function(event){
@@ -309,6 +312,11 @@
 
             if ( event.keyCode == 40) {
                 _this.tabIndex ++;
+
+                if ( _this.tabIndex > (_this.TotalData - 1) ) {
+                    _this.countryList.children[(_this.TotalData - 1)].classList = "";
+                    _this.tabIndex = 0;
+                }
 
                 _this.countryList.children[_this.tabIndex].classList.add(vars.namespace+'-selected');
 
@@ -322,21 +330,27 @@
 
                 _this.SetVal(_this.countryList.children[_this.tabIndex]);
 
+
             }else if (event.keyCode == 38 ){
                 _this.tabIndex --;
                 if ( _this.tabIndex < 0) {
                     _this.tabIndex = 0;
                 }
 
-                _this.countryList.children[_this.tabIndex].classList.add(vars.namespace+'-selected');
-                if ( _this.tabIndex >= 0 ) {
-                    _this.countryList.children[(_this.tabIndex+1)].classList = "";
-                }
-                if ( _this.tabIndex >= 2 ) {
-                    _this.countryListWrap.scrollTop = (_this.countryList.children[_this.tabIndex].offsetTop - (_this.countryList.children[_this.tabIndex].offsetHeight * 2))
-                }
-                _this.SetVal(_this.countryList.children[_this.tabIndex]);
+                    _this.countryList.children[_this.tabIndex].classList.add(vars.namespace+'-selected');
+                    if ( _this.tabIndex >= 0 ) {
+                        _this.countryList.children[(_this.tabIndex+1)].classList = "";
+                    }
+                    if ( _this.tabIndex >= 2 ) {
+                        _this.countryListWrap.scrollTop = (_this.countryList.children[_this.tabIndex].offsetTop - (_this.countryList.children[_this.tabIndex].offsetHeight * 2))
+                    }
+                    _this.SetVal(_this.countryList.children[_this.tabIndex]);
 
+            }
+
+            if ( event.keyCode == 13) {
+                _this.countryListWrap.style.display = 'none';
+                _this.tabIndex = -1;
             }
             
         }
