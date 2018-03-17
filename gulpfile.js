@@ -4,7 +4,6 @@ var gulp = require('gulp');
     gulp.uglify = require('gulp-uglify')
     gulp.cssmin = require('gulp-cssmin')
     gulp.rename = require('gulp-rename')
-    gulp.connect = require('gulp-connect')
     gulp.autoprefixer = require('gulp-autoprefixer')
     gulp.clean = require('gulp-clean')
     gulp.browserSync = require('browser-sync').create();
@@ -18,19 +17,11 @@ gulp.task('compass', function() {
       sass: 'src/sass'
     }))
     .pipe(gulp.dest('dist/css/'))
-    .pipe(gulp.connect.reload());
 });
 
 gulp.task('js', function () {
   gulp.src('./src/js/*.js')
     .pipe(gulp.dest('dist/js/'))
-    .pipe(gulp.connect.reload())
-});
-
-gulp.task('connect', function() {
-    gulp.connect.server({
-        livereload: true
-    });
 });
 
 gulp.task('js_min', function () {
