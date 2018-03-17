@@ -17,6 +17,7 @@
   "author": "Indaam",
   "license": "MIT",
   "devDependencies": {
+    "browser-sync": "^2.23.6",
     "csvtojson": "^1.1.9",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",

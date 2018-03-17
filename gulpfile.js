@@ -7,6 +7,8 @@ var gulp = require('gulp');
     gulp.connect = require('gulp-connect')
     gulp.autoprefixer = require('gulp-autoprefixer')
     gulp.clean = require('gulp-clean')
+    gulp.browserSync = require('browser-sync').create();
+
 
 gulp.task('compass', function() {
   gulp.src('./src/sass/*.scss')
@@ -67,6 +69,11 @@ gulp.task('css_min', function () {
     .pipe(gulp.dest('dist/css'));
 });
 
+gulp.task('dev-watch', ['compass', 'js'], function (done) {
+    gulp.browserSync.reload();
+    done();
+});
+
 gulp.task('watch', function() {
     gulp.watch(['src/sass/*'], {cwd: './'}, ['compass']);
     gulp.watch(['src/js/*'], {cwd: './'}, ['js']);
@@ -79,3 +86,18 @@ gulp.task('clean', function () {
 
 gulp.task('dev', ['watch', 'connect']);
 gulp.task('build', ['clean', 'compass', 'css_min', 'js', 'js_min']);
+
+
+gulp.task('default', ['compass', 'js'], function () {
+
+    // Serve files from the root of this project
+    gulp.browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    });
+
+    // add browserSync.reload to the tasks array to make
+    // all browsers reload after tasks are complete.
+    gulp.watch(["src/sass/*", "src/js/*"], ['dev-watch']);
+});

@@ -269,7 +269,7 @@ output -> `src/js/countries.js`
 
 ## Start
 ```bash
-npm install && gulp dev
+npm install && gulp
 ```
 To see on browser, open [http://localhost:8080]
 All source at `src/...` and output at `dist/...`
